@@ -1,0 +1,269 @@
+/* ============================================================
+   hero.css — Split hero: giant text left, photo right
+   ============================================================ */
+
+@keyframes heroFadeSlideUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes heroRevealLeft {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Section ─────────────────────────────────────────────────── */
+.section--hero {
+  min-height: 100vh;
+  background: var(--bg);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding-top: 100px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Decorative large circle */
+.section--hero::before {
+  content: '';
+  position: absolute;
+  right: -200px;
+  top: -200px;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(var(--color-accent-rgb), 0.07) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ── Two-panel split ─────────────────────────────────────────── */
+.hero__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: var(--spacing-2xl);
+  align-items: center;
+}
+
+/* ── Left column ─────────────────────────────────────────────── */
+.hero__text-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.hero__status-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+
+  opacity: 0;
+  animation: heroRevealLeft 0.5s ease 0.1s forwards;
+}
+
+.hero__status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 5px 14px;
+  background: var(--color-accent2-light);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-accent2);
+  letter-spacing: 0.04em;
+}
+
+.hero__status-dot {
+  width: 7px; height: 7px;
+  background: var(--color-accent2);
+  border-radius: 50%;
+  animation: pulseDot 2s infinite;
+  flex-shrink: 0;
+}
+
+.hero__eyebrow-text {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.06em;
+}
+
+/* ── Name ────────────────────────────────────────────────────── */
+.hero__name {
+  font-family: var(--font-family-heading);
+  font-size: clamp(3.5rem, 8vw, 6.5rem);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: var(--color-text-primary);
+  margin: 0;
+
+  opacity: 0;
+  animation: heroFadeSlideUp 0.6s cubic-bezier(0.2, 1, 0.4, 1) 0.2s forwards;
+}
+
+.hero__name em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+/* ── Tagline ─────────────────────────────────────────────────── */
+.hero__tagline {
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+  max-width: 480px;
+  margin: 0;
+
+  opacity: 0;
+  animation: heroFadeSlideUp 0.5s ease 0.45s forwards;
+}
+
+.hero__description { display: none; }
+
+/* ── CTAs ────────────────────────────────────────────────────── */
+.hero__cta-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+
+  opacity: 0;
+  animation: heroFadeSlideUp 0.5s ease 0.65s forwards;
+}
+
+/* ── Right column — photo card ───────────────────────────────── */
+.hero__figure {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+
+  opacity: 0;
+  animation: heroFadeIn 0.7s cubic-bezier(0.2, 1, 0.4, 1) 0s forwards;
+}
+
+/* Big decorative blob behind photo */
+.hero__figure::before {
+  content: '';
+  position: absolute;
+  inset: -24px;
+  background: var(--color-accent-light);
+  border-radius: var(--radius-xl);
+  z-index: 0;
+}
+
+.hero__avatar {
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  z-index: 1;
+  min-width: 120px;
+  min-height: 120px;
+}
+
+/* Floating social strip below photo */
+.hero__photo-socials {
+  display: flex;
+  gap: var(--spacing-sm);
+  position: relative;
+  z-index: 1;
+}
+
+.hero__social-btn {
+  width: 42px; height: 42px;
+  border-radius: var(--radius-full);
+  background: var(--surface2);
+  border: 1.5px solid var(--color-border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--color-text-secondary);
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.hero__social-btn:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-accent);
+}
+
+.hero__social-btn svg {
+  width: 17px; height: 17px; display: block;
+}
+
+/* ── Stats strip ─────────────────────────────────────────────── */
+.hero__stats-wrap {
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--spacing-2xl);
+}
+
+.hero__stats-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.hero__stat {
+  padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-xl) 0;
+  border-right: 1px solid var(--color-border);
+  padding-left: var(--spacing-lg);
+}
+
+.hero__stat:first-child { padding-left: 0; }
+.hero__stat:last-child { border-right: none; }
+
+.hero__stat-num {
+  font-family: var(--font-family-heading);
+  font-size: 2.25rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--color-accent);
+  line-height: 1;
+}
+
+.hero__stat-label {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* ── Mobile ──────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .hero__container {
+    grid-template-columns: 1fr;
+    padding-top: var(--spacing-lg);
+  }
+  .hero__figure { display: none; }
+  .hero__name { font-size: clamp(3rem, 12vw, 4.5rem); }
+}
+
+@media (max-width: 767px) {
+  .section--hero { padding-top: 80px; }
+  .hero__stats-inner { grid-template-columns: repeat(2, 1fr); }
+  .hero__stat { padding: var(--spacing-lg) var(--spacing-md); }
+  .hero__stat:nth-child(2) { border-right: none; }
+}

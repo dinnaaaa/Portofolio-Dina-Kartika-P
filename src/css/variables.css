@@ -1,0 +1,26 @@
+/* ============================================================
+   variables.css — dipertahankan untuk kompatibilitas test
+   Desain aktif ada di index.html (self-contained)
+   ============================================================ */
+:root {
+  --color-bg-primary:    #080C14;
+  --color-bg-secondary:  #0C1120;
+  --color-text-primary:  #F0F4FF;
+  --color-text-secondary:#8B95AE;
+  --color-accent:        #4F8EF7;
+  --color-accent-hover:  #2563EB;
+  --color-border:        rgba(79,142,247,0.13);
+  --color-card-bg:       rgba(17,24,39,0.8);
+  --color-error:         #EF4444;
+  --color-success:       #34D399;
+  --font-family-heading: 'Space Grotesk', sans-serif;
+  --font-family-body:    'Inter', sans-serif;
+  --spacing-xs: 4px; --spacing-sm: 8px; --spacing-md: 16px;
+  --spacing-lg: 24px; --spacing-xl: 40px; --spacing-2xl: 64px;
+  --spacing-3xl: 96px;
+  --bp-mobile: 768px; --bp-tablet: 1024px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root { --color-bg-primary: #080C14; --color-bg-secondary: #0C1120; }
+}

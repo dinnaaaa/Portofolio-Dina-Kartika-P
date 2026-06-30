@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="Dina Kartika P. — UI/UX Designer & Frontend Developer. Fresh Graduate Informatika yang passionate membangun web experiences modern."/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+<title>Dina Kartika — Frontend Developer</title>
+<style>
+/* ======================================================
+   TOKENS
+====================================================== */
+:root{
+  --bg:#080C14;--bg2:#0C1120;--bg3:#111827;--s:#1A2035;--s2:#1F2640;
+  --bl:#4F8EF7;--bl2:#2563EB;--bl3:#1D4ED8;
+  --cy:#22D3EE;--vi:#A78BFA;--gn:#34D399;--og:#FB923C;
+  --glow:rgba(79,142,247,.14);--glow2:rgba(79,142,247,.06);
+  --t:#F0F4FF;--t2:#8B95AE;--t3:#4B5567;
+  --bd:rgba(79,142,247,.13);--bd2:rgba(79,142,247,.28);
+  --r4:4px;--r8:8px;--r12:12px;--r16:16px;--r24:24px;--r99:999px;
+  --sh:0 8px 32px rgba(0,0,0,.5);--shb:0 8px 32px rgba(79,142,247,.3);
+  --tr:.22s ease;
+}
+*,::before,::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t);overflow-x:hidden;line-height:1.65}
+a{text-decoration:none;color:inherit}img{display:block;max-width:100%}
+ul{list-style:none}button{font:inherit;cursor:pointer;border:none;background:none}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--bl);border-radius:2px}
+
+/* ── AMBIENT BG ── */
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 75% 55% at 10% 5%,rgba(79,142,247,.09),transparent 65%),
+  radial-gradient(ellipse 55% 45% at 90% 90%,rgba(167,139,250,.07),transparent 60%),
+  radial-gradient(ellipse 45% 35% at 50% 50%,rgba(34,211,238,.04),transparent 55%)}
+
+/* ── CANVAS ── */
+#cvs{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.6}
+
+/* ── LOADER ── */
+#ldr{position:fixed;inset:0;z-index:9999;background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;
+  transition:opacity .6s ease,visibility .6s}
+#ldr.out{opacity:0;visibility:hidden}
+.ld-name{font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:700;letter-spacing:-.03em;
+  background:linear-gradient(135deg,var(--bl),var(--cy));-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text}
+.ld-bar{width:180px;height:2px;background:var(--s);border-radius:2px;overflow:hidden}
+.ld-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--bl),var(--cy));transition:width .04s}
+.ld-txt{font-family:'Fira Code',monospace;font-size:.78rem;color:var(--bl);letter-spacing:.1em}
+</style>
+<style>
+/* ── NAVBAR ── */
+#nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:1000;
+  width:calc(100% - 40px);max-width:1080px}
+.nav-pill{display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;height:56px;
+  background:rgba(8,12,20,.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid var(--bd2);border-radius:var(--r99);
+  box-shadow:0 4px 24px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.03)}
+#nav.scrolled .nav-pill{background:rgba(8,12,20,.97);box-shadow:var(--sh),0 0 48px var(--glow)}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand-dot{width:8px;height:8px;border-radius:50%;background:var(--bl);
+  box-shadow:0 0 10px var(--bl);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 10px var(--bl)}50%{box-shadow:0 0 22px var(--bl)}}
+.nav-brand-name{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;
+  letter-spacing:-.02em;color:var(--t)}
+.nav-brand-name span{color:var(--t)}
+.nav-links{display:flex;gap:2px}
+.nav-links a{font-size:.83rem;font-weight:500;color:var(--t2);
+  padding:6px 14px;border-radius:var(--r99);transition:color .2s,background .2s}
+.nav-links a:hover,.nav-links a.act{color:var(--t);background:var(--glow)}
+.nav-links a.act{color:var(--bl)}
+.nav-btn{padding:8px 20px;background:linear-gradient(135deg,var(--bl),var(--bl2));
+  color:#fff;border-radius:var(--r99);font-size:.82rem;font-weight:600;
+  box-shadow:0 2px 14px rgba(79,142,247,.35);transition:transform .2s,box-shadow .2s}
+.nav-btn:hover{transform:translateY(-2px);box-shadow:0 6px 26px rgba(79,142,247,.55)}
+.ham{display:none;flex-direction:column;gap:5px;padding:6px;
+  border:1px solid var(--bd);border-radius:var(--r8)}
+.ham span{display:block;width:18px;height:1.5px;background:var(--t2);border-radius:2px;transition:var(--tr)}
+.ham.o span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.ham.o span:nth-child(2){opacity:0}
+.ham.o span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mob{position:fixed;inset:0;z-index:998;background:rgba(8,12,20,.98);backdrop-filter:blur(24px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;
+  transform:translateX(100%);transition:transform .38s cubic-bezier(.4,0,.2,1)}
+.mob.o{transform:translateX(0)}
+.mob a{font-family:'Space Grotesk',sans-serif;font-size:2.2rem;font-weight:700;
+  color:var(--t2);transition:color .2s,transform .2s}
+.mob a:hover{color:var(--bl);transform:translateX(8px)}
+.mob-x{position:absolute;top:20px;right:20px;width:44px;height:44px;border-radius:50%;
+  border:1px solid var(--bd2);display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;color:var(--t2)}
+
+/* ── HERO ── */
+#hero{position:relative;z-index:1;min-height:100vh;
+  display:grid;grid-template-columns:1fr 380px;gap:3rem;align-items:center;
+  padding:110px 5% 80px;max-width:1200px;margin:0 auto}
+.h-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;
+  background:var(--glow);border:1px solid var(--bd2);border-radius:var(--r99);
+  font-size:.75rem;font-weight:600;color:var(--cy);letter-spacing:.06em;margin-bottom:1.75rem}
+.h-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--gn);
+  box-shadow:0 0 8px var(--gn);animation:pulse 2s infinite}
+.h-meta{font-size:.72rem;font-weight:600;color:var(--t3);letter-spacing:.12em;
+  text-transform:uppercase;margin-bottom:1.75rem}
+/* Hero header layout */
+.h-top{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap}
+.h-top-left{display:flex;align-items:center}
+.h-top-right{display:flex;flex-direction:column;align-items:flex-start}
+.h-role{font-weight:700;color:var(--t);font-size:1rem}
+.h-location{font-family:'Fira Code',monospace;font-size:.78rem;color:var(--t2);letter-spacing:.06em}
+@media(max-width:640px){
+  .h-top{flex-direction:column;align-items:flex-start}
+}
+.h-code{font-family:'Fira Code',monospace;font-size:.88rem;color:var(--bl);
+  margin-bottom:.8rem;opacity:.75;letter-spacing:.04em}
+.h-name{font-family:'Space Grotesk',sans-serif;line-height:1.0;
+  font-size:clamp(3rem,6vw,5.25rem);font-weight:700;letter-spacing:-.04em;margin-bottom:1.1rem}
+.h-name-1{color:var(--t);display:block}
+.h-name-2{display:block;color:var(--t);}
+.h-sub{font-size:.9rem;color:var(--bl);font-weight:500;margin-bottom:.9rem;
+  letter-spacing:.02em;opacity:.85}
+.h-desc{font-size:.975rem;font-weight:300;color:var(--t2);
+  line-height:1.9;max-width:480px;margin-bottom:2.25rem}
+.h-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;
+  border-radius:var(--r8);font-size:.9rem;font-weight:600;letter-spacing:.01em;
+  transition:transform .2s,box-shadow .2s}
+.btn-p{background:linear-gradient(135deg,var(--bl),var(--bl2));color:#fff;
+  box-shadow:0 4px 22px rgba(79,142,247,.38)}
+.btn-p:hover{transform:translateY(-3px);box-shadow:0 10px 36px rgba(79,142,247,.55)}
+.btn-o{background:transparent;color:var(--t);border:1.5px solid var(--bd2)}
+.btn-o:hover{border-color:var(--bl);color:var(--bl);background:var(--glow);transform:translateY(-2px)}
+.btn-g{background:transparent;color:var(--t2);border:none;padding:12px 0;
+  text-decoration:none;font-size:.9rem;font-weight:500}
+.btn-g:hover{color:var(--t)}
+.btn svg{width:16px;height:16px;flex-shrink:0}
+.h-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--t3);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;z-index:1}
+.h-scroll-mouse{width:22px;height:32px;border:1.5px solid var(--t3);border-radius:11px;
+  display:flex;justify-content:center;padding-top:5px}
+.h-scroll-w{width:3px;height:7px;background:var(--bl);border-radius:2px;
+  animation:sw 1.8s ease-in-out infinite}
+@keyframes sw{0%{transform:translateY(0);opacity:1}100%{transform:translateY(12px);opacity:0}}
+</style>
+<style>
+/* ── HERO PHOTO (clean, no card) ── */
+.h-card{position:relative;display:flex;flex-direction:column;align-items:center;gap:16px}
+.h-card-box{position:relative;border-radius:20px;overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.55);}
+.h-card-box::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 60%,rgba(8,12,20,.5));
+  pointer-events:none;z-index:1;}
+.h-avatar{width:100%;max-width:300px;aspect-ratio:3/4;
+  object-fit:cover;object-position:center center;display:block}
+.h-card-info{display:none}
+.h-card-stats{display:none}
+.hcs{display:none}
+/* social icons below photo */
+.h-photo-socials{display:flex;gap:10px;justify-content:center}
+.h-soc-btn{width:40px;height:40px;border-radius:50%;
+  background:rgba(17,24,39,.8);backdrop-filter:blur(8px);
+  border:1px solid var(--bd2);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--t2);transition:var(--tr);}
+.h-soc-btn:hover{background:var(--glow);border-color:var(--bl);color:#93C5FD;transform:translateY(-3px);}
+.h-soc-btn svg{width:16px;height:16px;}
+
+/* ── SECTION COMMON ── */
+section{position:relative;z-index:1;padding:110px 5%}
+.sw{max-width:1100px;margin:0 auto}
+.s-ey{font-family:'Fira Code',monospace;font-size:.78rem;color:var(--bl);
+  letter-spacing:.14em;text-transform:uppercase;
+  display:flex;align-items:center;gap:10px;margin-bottom:.6rem}
+.s-ey::before{content:'';width:24px;height:1.5px;background:var(--bl);flex-shrink:0}
+.s-h{font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;
+  letter-spacing:-.03em;color:var(--t);margin-bottom:3rem}
+.s-h em{font-style:normal;
+  background:linear-gradient(135deg,var(--bl),var(--cy));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* glass base */
+.gc{background:rgba(17,24,39,.8);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid var(--bd);border-radius:var(--r16);transition:border-color .25s,box-shadow .25s,transform .25s}
+.gc:hover{border-color:var(--bd2);box-shadow:0 0 40px rgba(79,142,247,.1),var(--sh);transform:translateY(-3px)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.rv.in{opacity:1;transform:translateY(0)}
+.rvl{opacity:0;transform:translateX(-28px);transition:opacity .65s ease,transform .65s ease}
+.rvl.in{opacity:1;transform:translateX(0)}
+.rvr{opacity:0;transform:translateX(28px);transition:opacity .65s ease,transform .65s ease}
+.rvr.in{opacity:1;transform:translateX(0)}
+
+/* ── ABOUT ── */
+#about{background:var(--bg2)}
+.ab-grid{display:grid;grid-template-columns:1fr;gap:2rem;align-items:start}
+.ab-photo-wrap{position:relative}
+.ab-glow{position:absolute;inset:-24px;border-radius:28px;
+  background:linear-gradient(135deg,rgba(79,142,247,.1),rgba(167,139,250,.07));z-index:0}
+.ab-photo{position:relative;z-index:1;width:100%;max-width:340px;
+  aspect-ratio:3/4;object-fit:cover;border-radius:20px;
+  box-shadow:0 24px 60px rgba(0,0,0,.6)}
+.ab-stat-float{position:absolute;z-index:2;bottom:-16px;right:0;
+  padding:14px 18px;background:linear-gradient(135deg,var(--bl),var(--cy));
+  border-radius:var(--r16);text-align:center;box-shadow:0 8px 24px rgba(79,142,247,.45)}
+.ab-stat-n{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;
+  font-weight:700;color:#fff;line-height:1}
+.ab-stat-l{font-size:.62rem;font-weight:600;color:rgba(255,255,255,.8);
+  letter-spacing:.06em;text-transform:uppercase;margin-top:3px}
+.ab-text p{font-size:1.05rem;font-weight:300;color:var(--t2);line-height:1.9;margin-bottom:1.1rem}
+.ab-text strong{color:var(--t);font-weight:500}
+.ab-chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:2rem 0}
+.ch{display:inline-flex;align-items:center;gap:5px;
+  padding:6px 14px;border-radius:var(--r8);
+  font-size:.8rem;font-weight:600;letter-spacing:.01em;
+  transition:transform .2s,box-shadow .2s;cursor:default;white-space:nowrap;}
+.ch:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.3);}
+.ch-blue{background:rgba(79,142,247,.13);border:1px solid rgba(79,142,247,.32);color:#93C5FD;}
+.ch-blue:hover{background:rgba(79,142,247,.22);box-shadow:0 4px 16px rgba(79,142,247,.25);}
+.ch-violet{background:rgba(167,139,250,.13);border:1px solid rgba(167,139,250,.32);color:#C4B5FD;}
+.ch-violet:hover{background:rgba(167,139,250,.22);box-shadow:0 4px 16px rgba(167,139,250,.25);}
+.ch-cyan{background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.28);color:#67E8F9;}
+.ch-cyan:hover{background:rgba(34,211,238,.18);box-shadow:0 4px 16px rgba(34,211,238,.2);}
+.ch-green{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.28);color:#6EE7B7;}
+.ch-green:hover{background:rgba(52,211,153,.18);box-shadow:0 4px 16px rgba(52,211,153,.2);}
+.ab-info{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:1.5rem}
+.ai{padding:14px 16px;border-radius:var(--r12);background:rgba(79,142,247,.06);border:1px solid var(--bd)}
+.ai-l{font-size:.66rem;font-weight:600;color:var(--bl);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.ai-v{font-size:.88rem;color:var(--t);font-weight:500}
+</style>
+<style>
+/* ── SKILLS ── */
+.sk-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem;align-items:start}
+.sk-card{padding:1.75rem}
+.sk-card-hd{font-size:.7rem;font-weight:700;color:var(--bl);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:1.25rem;display:flex;align-items:center;gap:8px}
+.sk-tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.st{padding:5px 13px;border-radius:var(--r99);background:var(--s2);border:1px solid var(--bd);
+  font-size:.78rem;font-weight:500;color:var(--t2);transition:var(--tr)}
+.st:hover{background:var(--glow);border-color:var(--bd2);color:#93C5FD}
+.sk-bar-row{margin-bottom:.85rem}
+.sk-bar-row:last-child{margin-bottom:0}
+.sk-bar-lbl{display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.4rem}
+.sk-bar-lbl span:first-child{color:var(--t2)}
+.sk-bar-lbl span:last-child{color:var(--bl);font-weight:600}
+.sk-track{height:5px;background:var(--s2);border-radius:3px;overflow:hidden}
+.sk-fill{height:100%;background:linear-gradient(90deg,var(--bl),var(--cy));
+  border-radius:3px;width:0;transition:width 1.3s cubic-bezier(.4,0,.2,1)}
+
+/* ── EDUCATION ── */
+#education{background:var(--bg2)}
+.edu-list{display:flex;flex-direction:column;gap:1.25rem}
+.edu-card{padding:1.75rem 2rem;display:grid;grid-template-columns:140px 1fr;gap:1.75rem;align-items:start}
+.edu-yr{font-family:'Fira Code',monospace;font-size:.82rem;color:var(--bl);font-weight:500;
+  white-space:nowrap;padding-top:.2rem}
+.edu-badge{display:inline-flex;padding:3px 10px;background:var(--glow);
+  border:1px solid var(--bd2);border-radius:var(--r99);font-size:.68rem;
+  font-weight:700;color:#93C5FD;letter-spacing:.04em;margin-bottom:.6rem}
+.edu-deg{font-size:1.05rem;font-weight:600;color:var(--t);margin-bottom:.25rem}
+.edu-sch{font-size:.88rem;color:#93C5FD;margin-bottom:.5rem}
+.edu-desc{font-size:.85rem;color:var(--t2);line-height:1.75}
+.edu-gpa{display:inline-flex;align-items:center;gap:6px;margin-top:.75rem;
+  padding:5px 12px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);
+  border-radius:var(--r99);font-size:.75rem;font-weight:600;color:var(--gn)}
+
+/* ── PROJECTS ── */
+.pj-filters{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.pj-fb{padding:7px 18px;border-radius:var(--r99);border:1.5px solid var(--bd);
+  background:transparent;color:var(--t2);font-size:.82rem;font-weight:500;cursor:pointer;transition:var(--tr)}
+.pj-fb:hover,.pj-fb.act{border-color:var(--bl);color:#93C5FD;background:var(--glow)}
+.pj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.75rem}
+.pj-card{overflow:hidden}
+.pj-thumb{aspect-ratio:16/10;overflow:hidden;position:relative;background:var(--s)}
+.pj-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.pj-card:hover .pj-thumb img{transform:scale(1.06)}
+.pj-ov{position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 30%,rgba(8,12,20,.9));
+  opacity:0;transition:opacity .3s}
+.pj-card:hover .pj-ov{opacity:1}
+.pj-body{padding:1.5rem}
+.pj-cats{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.75rem}
+.pj-cat{padding:3px 10px;background:var(--glow);border:1px solid var(--bd2);
+  border-radius:var(--r99);font-size:.68rem;font-weight:600;color:#93C5FD;letter-spacing:.04em}
+.pj-title{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;
+  color:var(--t);margin-bottom:.5rem;line-height:1.3}
+.pj-desc{font-size:.85rem;color:var(--t2);line-height:1.7;margin-bottom:1rem;
+  display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.pj-tech{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.2rem}
+.pj-tech span{padding:3px 9px;background:var(--s2);border-radius:var(--r4);
+  font-family:'Fira Code',monospace;font-size:.7rem;color:var(--t3)}
+.pj-links{display:flex;gap:.75rem}
+.pj-lk{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;
+  border-radius:var(--r8);font-size:.8rem;font-weight:600;transition:var(--tr)}
+.pj-lk-gh{background:var(--s2);color:var(--t2)}
+.pj-lk-gh:hover{background:var(--s);color:var(--t)}
+.pj-lk-dm{background:var(--bl);color:#fff}
+.pj-lk-dm:hover{background:var(--bl2);transform:translateY(-1px)}
+.pj-lk svg{width:14px;height:14px}
+</style>
+<style>
+/* ── EXPERIENCE ── */
+#experience{background:var(--bg2)}
+.exp-list{display:flex;flex-direction:column;gap:1.25rem}
+.exp-card{padding:1.75rem 2rem;display:grid;grid-template-columns:130px 1fr;gap:1.75rem;align-items:start}
+.exp-per{font-family:'Fira Code',monospace;font-size:.8rem;color:var(--bl);
+  font-weight:500;white-space:nowrap;padding-top:.2rem}
+.exp-type{display:inline-flex;padding:2px 9px;background:rgba(52,211,153,.1);
+  border:1px solid rgba(52,211,153,.25);border-radius:var(--r99);
+  font-size:.68rem;font-weight:700;color:var(--gn);letter-spacing:.06em;margin-bottom:.6rem}
+.exp-role{font-size:1.05rem;font-weight:600;color:var(--t);margin-bottom:.2rem}
+.exp-co{font-size:.88rem;color:#93C5FD;margin-bottom:.6rem}
+.exp-desc{font-size:.85rem;color:var(--t2);line-height:1.8}
+.exp-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.75rem}
+.exp-tag{padding:4px 12px;background:rgba(79,142,247,.12);border:1px solid rgba(79,142,247,.3);
+  border-radius:var(--r99);font-family:'Fira Code',monospace;font-size:.75rem;
+  color:#93C5FD;font-weight:500;letter-spacing:.02em}
+
+/* ── CERTIFICATES CAROUSEL ── */
+.cert-carousel-wrap{position:relative}
+.cert-carousel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.75rem;gap:1rem;flex-wrap:wrap}
+.cert-carousel-nav{display:flex;gap:.5rem}
+.cert-nav-btn{width:40px;height:40px;border-radius:50%;background:var(--s2);border:1px solid var(--bd);
+  color:var(--t2);display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:var(--tr);flex-shrink:0}
+.cert-nav-btn:hover{background:var(--glow);border-color:var(--bd2);color:var(--t)}
+.cert-nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.cert-nav-btn svg{width:16px;height:16px}
+.cert-counter{font-family:'Fira Code',monospace;font-size:.78rem;color:var(--t3)}
+.cert-carousel-viewport{overflow:hidden;border-radius:var(--r16);padding:4px 0}
+.cert-track{display:flex;transition:transform .35s ease}
+.cert-slide{min-width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem;align-items:stretch}
+.cert-slide-last{max-width:860px;margin:0 auto}
+.cert-card{padding:1.4rem;display:flex;gap:.9rem;align-items:flex-start;min-height:100%;
+  min-width:0;transition:opacity .3s ease,transform .3s ease}
+.cert-card.hidden{display:none!important}
+.cert-card-placeholder{visibility:hidden;pointer-events:none;border:1px dashed transparent;background:transparent;box-shadow:none}
+.cert-ico{width:40px;height:40px;border-radius:var(--r8);background:var(--glow);
+  border:1px solid var(--bd2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cert-ico svg{width:20px;height:20px;color:var(--bl)}
+.cert-no{font-family:'Fira Code',monospace;font-size:.68rem;color:var(--bl);
+  font-weight:500;margin-bottom:.3rem}
+.cert-nm{font-size:.88rem;font-weight:600;color:var(--t);line-height:1.35;margin-bottom:.2rem}
+.cert-is{font-size:.72rem;color:var(--t3)}
+.cert-lk{display:inline-flex;align-items:center;gap:4px;font-size:.73rem;
+  color:var(--bl);margin-top:.4rem;transition:color .2s}
+.cert-lk:hover{color:#93C5FD}
+.cert-yr{font-size:.72rem;color:var(--t3)}
+
+@media (max-width:980px){
+  .cert-slide{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media (max-width:640px){
+  .cert-slide{grid-template-columns:1fr}
+  .cert-carousel-header{align-items:flex-start}
+  .cert-carousel-nav{width:100%;justify-content:flex-end}
+}
+
+/* ── CONTACT ── */
+#contact{background:var(--bg2)}
+.ct-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:4rem;align-items:start}
+.ct-left h3{font-family:'Space Grotesk',sans-serif;font-size:1.35rem;font-weight:700;
+  color:var(--t);margin-bottom:.75rem}
+.ct-left p{font-size:.975rem;font-weight:300;color:var(--t2);line-height:1.85;margin-bottom:2rem}
+.ct-links{display:flex;flex-direction:column;gap:.75rem}
+.ct-lk{display:flex;align-items:center;gap:14px;padding:14px 18px;
+  border-radius:var(--r16);border:1px solid var(--bd);background:rgba(17,24,39,.5);
+  transition:var(--tr)}
+.ct-lk:hover{border-color:var(--bd2);background:var(--glow);transform:translateX(4px)}
+.ct-lk-ico{width:38px;height:38px;border-radius:var(--r8);background:var(--s2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ct-lk-ico svg{width:18px;height:18px}
+.ct-lk-lbl{font-size:.68rem;font-weight:600;color:var(--bl);letter-spacing:.08em;text-transform:uppercase}
+.ct-lk-val{font-size:.88rem;color:var(--t)}
+.ct-right form{display:flex;flex-direction:column;gap:1.1rem}
+.fg{display:flex;flex-direction:column;gap:.4rem}
+.flbl{font-size:.78rem;font-weight:600;color:var(--t2);letter-spacing:.04em}
+.finp,.ftxt{padding:11px 14px;background:var(--s2);border:1.5px solid var(--bd);
+  border-radius:var(--r8);color:var(--t);font-family:'Inter',sans-serif;
+  font-size:.88rem;transition:border-color .2s,box-shadow .2s;outline:none}
+.finp::placeholder,.ftxt::placeholder{color:var(--t3)}
+.finp:focus,.ftxt:focus{border-color:var(--bl);box-shadow:0 0 0 3px var(--glow)}
+.ftxt{min-height:130px;resize:vertical}
+.fsub{padding:13px;background:linear-gradient(135deg,var(--bl),var(--bl2));
+  color:#fff;border-radius:var(--r8);font-size:.9rem;font-weight:600;
+  transition:transform .2s,box-shadow .2s}
+.fsub:hover{transform:translateY(-2px);box-shadow:var(--shb)}
+
+/* ── FOOTER ── */
+footer{position:relative;z-index:1;background:var(--bg);padding:3rem 5%;text-align:center;
+  border-top:1px solid var(--bd)}
+.ft-inner{max-width:1100px;margin:0 auto}
+.ft-logo{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;
+  color:var(--t);margin-bottom:1.25rem}
+.ft-logo span{background:linear-gradient(135deg,var(--bl),var(--cy));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ft-soc{display:flex;gap:.75rem;justify-content:center;margin-bottom:1.5rem}
+.soc-btn{width:44px;height:44px;border-radius:var(--r8);background:var(--s);
+  border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;
+  color:var(--t2);transition:var(--tr)}
+.soc-btn:hover{background:var(--glow);border-color:var(--bd2);color:#93C5FD;transform:translateY(-3px)}
+.soc-btn svg{width:18px;height:18px}
+.ft-copy{font-size:.78rem;color:var(--t3)}
+.ft-copy span{color:var(--bl)}
+
+/* ── BACK TO TOP ── */
+#btt{position:fixed;bottom:2rem;right:2rem;z-index:900;width:48px;height:48px;
+  border-radius:var(--r8);background:linear-gradient(135deg,var(--bl),var(--bl2));
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:translateY(16px);transition:var(--tr);pointer-events:none;
+  box-shadow:0 4px 20px rgba(79,142,247,.4)}
+#btt.show{opacity:1;transform:translateY(0);pointer-events:auto}
+#btt:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(79,142,247,.6)}
+#btt svg{width:20px;height:20px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  #hero{grid-template-columns:1fr;padding-top:90px}
+  .h-card{display:none}
+  .ab-grid,.ct-grid{grid-template-columns:1fr}
+  .ab-photo-wrap{display:flex;justify-content:center}
+  .sk-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .nav-links,.nav-btn{display:none}
+  .ham{display:flex}
+  section{padding:80px 1.25rem}
+  #hero{padding-left:1.25rem;padding-right:1.25rem}
+  #nav{width:calc(100% - 24px);top:10px}
+  .sk-grid{grid-template-columns:1fr}
+  .edu-card,.exp-card{grid-template-columns:1fr}
+  .h-name{font-size:clamp(2.4rem,9vw,3.5rem)}
+}
+@media(max-width:1100px){
+  #hero{grid-template-columns:1fr 340px;gap:2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="ldr">
+  <div class="ld-name">Dina Kartika Pramudita</div>
+  <div class="ld-bar"><div class="ld-fill" id="ldf"></div></div>
+  <div class="ld-txt" id="ldtxt">0%</div>
+</div>
+
+<!-- CANVAS PARTICLES -->
+<canvas id="cvs"></canvas>
+
+<!-- NAVBAR -->
+<nav id="nav">
+  <div class="nav-pill">
+    <div class="nav-brand">
+      <div class="nav-brand-dot"></div>
+      <div class="nav-brand-name">Dina <span>Kartika Pramudita</span></div>
+    </div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Tools</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#certificates">Certifications</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="/src/assets/cv/dina-cv.pdf" download class="nav-btn">Download CV</a>
+    <button class="ham" id="ham" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob" id="mob">
+  <button class="mob-x" id="mobx" aria-label="Close">✕</button>
+  <a href="#about" class="mob-a">About</a>
+  <a href="#skills" class="mob-a">Tools</a>
+  <a href="#experience" class="mob-a">Experience</a>
+  <a href="#projects" class="mob-a">Projects</a>
+  <a href="#certificates" class="mob-a">Certifications</a>
+  <a href="#contact" class="mob-a">Contact</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <div>
+    <div class="h-top">
+      <div class="h-top-left">
+        <div class="h-badge"><span class="h-badge-dot"></span>Open to work</div>
+      </div>
+      <div class="h-top-right">
+        <div class="h-role">Software Engineer | Administration | Data Analyst</div>
+        <div class="h-location">Indonesia • Open to Work • Open to Remote</div>
+      </div>
+    </div>
+    <h1 class="h-name">
+      <span class="h-name-1">Dina Kartika</span>
+      <span class="h-name-2">Pramudita</span>
+    </h1>
+    <div class="h-sub">Building Digital Solutions with Technology &amp; Data</div>
+    <p class="h-desc">
+      Fresh Graduate Teknik Informatika yang passionate membangun pengalaman web modern,
+      responsif, dan berdampak. Siap berkontribusi dan terus belajar di lingkungan yang dinamis.
+    </p>
+    <div class="h-btns">
+      <a href="#projects" class="btn btn-p">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+        Lihat Proyek →
+      </a>
+      <a href="/src/assets/cv/dina-cv.pdf" download class="btn btn-o">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2"/></svg>
+        Unduh CV
+      </a>
+      <a href="#contact" class="btn-g">Hubungi saya</a>
+    </div>
+  </div>
+
+  <div class="h-card rv">
+    <div class="h-card-box">
+      <img src="/assets/Dina_foto.xjLvC56a.jpeg" alt="Dina Kartika Pramudita" class="h-avatar" fetchpriority="high"/>
+    </div>
+    <div class="h-photo-socials">
+      <a href="https://github.com/dina-kartika" target="_blank" rel="noopener noreferrer" class="h-soc-btn" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+      </a>
+      <a href="https://linkedin.com/in/dina-kartika" target="_blank" rel="noopener noreferrer" class="h-soc-btn" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+      <a href="mailto:dina.kartika@email.com" class="h-soc-btn" aria-label="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="h-scroll">
+    <div class="h-scroll-mouse"><div class="h-scroll-w"></div></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about" style="background:var(--bg2);position:relative;z-index:1;padding:110px 5%">
+  <div class="sw">
+    <div class="s-ey rv">About Me</div>
+    <h2 class="s-h rv">Tentang <em>Saya</em></h2>
+    <div class="ab-grid">
+      <div class="ab-text rvr">
+        <p>Halo! Saya <strong>Dina Kartika Pramudita</strong>, seorang Fresh Graduate Teknik Informatika yang memiliki passion besar di dunia <strong>Frontend Development</strong> dan desain web.</p>
+        <p>Saya percaya bahwa teknologi terbaik adalah yang <strong>mudah digunakan</strong> dan <strong>menyenangkan secara visual</strong>. Kombinasi skill teknis dan kepekaan desain membuat saya mampu menjembatani gap antara desain dan implementasi.</p>
+        <p>Ketika tidak coding, saya senang mengeksplorasi tren desain terbaru, berkontribusi ke open-source, dan terus mengasah kemampuan melalui proyek-proyek nyata.</p>
+        <div class="ab-chips">
+          <span class="ch ch-blue">💻 Software Engineering</span>
+          <span class="ch ch-blue">🌐 Web Development</span>
+          <span class="ch ch-blue">📱 Mobile Development</span>
+          <span class="ch ch-violet">🤖 Machine Learning</span>
+          <span class="ch ch-violet">📊 Data Analytics</span>
+          <span class="ch ch-cyan">🐦 Flutter</span>
+          <span class="ch ch-cyan">🐍 Python</span>
+          <span class="ch ch-cyan">⚡ JavaScript</span>
+          <span class="ch ch-green">🗄️ SQL</span>
+          <span class="ch ch-green">🔧 Git</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SKILLS ===== -->
+<section id="skills" style="position:relative;z-index:1;padding:110px 5%">
+  <div class="sw">
+    <div class="s-ey rv">My Skills</div>
+    <h2 class="s-h rv">Keahlian & <em>Teknologi</em></h2>
+    <div class="sk-grid">
+      <div class="gc sk-card rv">
+        <div class="sk-card-hd">💻 Programming Languages</div>
+        <div class="sk-tags">
+          <span class="st">HTML5</span><span class="st">CSS3</span>
+          <span class="st">JavaScript (ES6+)</span><span class="st">Python</span>
+          <span class="st">Dart (Flutter)</span><span class="st">PHP</span>
+          <span class="st">SQL</span>
+        </div>
+      </div>
+      <div class="gc sk-card rv" style="transition-delay:.05s">
+        <div class="sk-card-hd">⚙️ Frameworks &amp; Libraries</div>
+        <div class="sk-tags">
+          <span class="st">Flutter</span><span class="st">React.js</span>
+          <span class="st">TensorFlow</span><span class="st">TensorFlow Lite</span>
+          <span class="st">MobileNetV3</span><span class="st">Pandas</span>
+          <span class="st">NumPy</span><span class="st">Scikit-learn</span>
+        </div>
+      </div>
+      <div class="gc sk-card rv" style="transition-delay:.1s">
+        <div class="sk-card-hd">🤖 Artificial Intelligence &amp; Data Science</div>
+        <div class="sk-tags">
+          <span class="st">Machine Learning</span><span class="st">Deep Learning</span>
+          <span class="st">Computer Vision</span><span class="st">Image Classification</span>
+          <span class="st">Transfer Learning</span><span class="st">Data Analytics</span>
+          <span class="st">Data Cleaning</span><span class="st">EDA</span>
+          <span class="st">Data Visualization</span>
+        </div>
+      </div>
+      <div class="gc sk-card rv" style="transition-delay:.15s">
+        <div class="sk-card-hd">🌐 Web Development</div>
+        <div class="sk-tags">
+          <span class="st">Responsive Web Design</span><span class="st">REST API Integration</span>
+          <span class="st">Progressive Web App (PWA)</span><span class="st">WordPress</span>
+        </div>
+      </div>
+      <div class="gc sk-card rv" style="transition-delay:.2s">
+        <div class="sk-card-hd">🗄 Database</div>
+        <div class="sk-tags">
+          <span class="st">MySQL</span><span class="st">Firebase</span>
+          <span class="st">SQLite</span><span class="st">Database Design</span>
+          <span class="st">SQL Query</span><span class="st">XAMPP</span>
+        </div>
+      </div>
+      <div class="gc sk-card rv" style="transition-delay:.25s">
+        <div class="sk-card-hd">📱 Mobile Development</div>
+        <div class="sk-tags">
+          <span class="st">Flutter</span><span class="st">Android Studio</span>
+          <span class="st">Material Design</span>
+        </div>
+      </div>
+      <div class="gc sk-card rv" style="transition-delay:.3s">
+        <div class="sk-card-hd">📊 Analytics &amp; Office</div>
+        <div class="sk-tags">
+          <span class="st">Microsoft Excel</span><span class="st">Pivot Table</span>
+          <span class="st">Google Sheets</span><span class="st">Microsoft Office</span>
+        </div>
+      </div>
+      <div class="gc sk-card rv" style="transition-delay:.35s">
+        <div class="sk-card-hd">🛠 Development Tools</div>
+        <div class="sk-tags">
+          <span class="st">Visual Studio Code</span><span class="st">Android Studio</span>
+          <span class="st">Git</span><span class="st">GitHub</span>
+          <span class="st">Kiro IDE</span><span class="st">Postman</span>
+          <span class="st">Jupyter Notebook</span><span class="st">Google Colab</span>
+          <span class="st">Figma (Basic)</span><span class="st">Canva</span>
+        </div>
+      </div>
+      <div class="gc sk-card rv" style="transition-delay:.4s">
+        <div class="sk-card-hd">🚀 Deployment &amp; Cloud</div>
+        <div class="sk-tags">
+          <span class="st">GitHub Pages</span><span class="st">Firebase Hosting</span>
+          <span class="st">Netlify</span><span class="st">Vercel</span>
+          <span class="st">Streamlit</span>
+        </div>
+      </div>
+      <div class="gc sk-card rv" style="transition-delay:.45s">
+        <div class="sk-card-hd">🤖 AI Productivity</div>
+        <div class="sk-tags">
+          <span class="st">ChatGPT</span><span class="st">Google Gemini</span>
+          <span class="st">GitHub Copilot</span><span class="st">AI Prompt Engineering</span>
+        </div>
+      </div>
+      <div class="gc sk-card rv" style="transition-delay:.5s">
+        <div class="sk-card-hd">🤝 Soft Skills</div>
+        <div class="sk-tags">
+          <span class="st">Problem Solving</span><span class="st">Analytical Thinking</span>
+          <span class="st">Teamwork</span><span class="st">Communication</span>
+          <span class="st">Adaptability</span><span class="st">Attention to Detail</span>
+          <span class="st">Time Management</span><span class="st">Fast Learner</span>
+        </div>
+      </div>
+      <div class="gc sk-card rv" style="transition-delay:.55s">
+        <div class="sk-card-hd">📋 Administrative Skills</div>
+        <div class="sk-tags">
+          <span class="st">Data Entry</span><span class="st">Report Preparation</span>
+          <span class="st">Document Management</span><span class="st">Spreadsheet Management</span>
+          <span class="st">Administrative Support</span><span class="st">Basic Financial Administration</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EDUCATION ===== -->
+<section id="education" style="background:var(--bg2);position:relative;z-index:1;padding:110px 5%">
+  <div class="sw">
+    <div class="s-ey rv">Education</div>
+    <h2 class="s-h rv">Riwayat <em>Pendidikan</em></h2>
+    <div class="edu-list">
+      <div class="gc edu-card rv">
+        <div class="edu-yr">2022 – 2026</div>
+        <div>
+          <div class="edu-badge">S1 · Lulus</div>
+          <div class="edu-deg">S1 Informatika</div>
+          <div class="edu-sch">Universitas AMIKOM Yogyakarta</div>
+          <div class="edu-desc">Fokus pada Software Engineering, Web Development, Mobile Development, Database Management, Artificial Intelligence, Machine Learning, dan Data Analytics melalui berbagai proyek akademik dan penelitian.</div>
+          <div class="edu-gpa">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            IPK 3,83 / 4,00
+          </div>
+        </div>
+      </div>
+      <div class="gc edu-card rv" style="transition-delay:.1s">
+        <div class="edu-yr">2019 – 2022</div>
+        <div>
+          <div class="edu-badge">SMK</div>
+          <div class="edu-deg">SMK Ikhlas Jawilan</div>
+          <div class="edu-sch">Teknik Komputer dan Jaringan</div>
+          <div class="edu-desc">Mempelajari jaringan komputer, administrasi sistem, troubleshooting perangkat keras dan lunak, serta dasar pemrograman sebagai fondasi dalam bidang teknologi informasi.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROJECTS ===== -->
+<section id="projects" style="position:relative;z-index:1;padding:110px 5%">
+  <div class="sw">
+    <div class="s-ey rv">Featured Work</div>
+    <h2 class="s-h rv">Proyek <em>Unggulan</em></h2>
+    <div class="pj-filters rv">
+      <button class="pj-fb act" data-f="all">Semua</button>
+      <button class="pj-fb" data-f="web">Web App</button>
+      <button class="pj-fb" data-f="mobile">Mobile</button>
+      <button class="pj-fb" data-f="data">Data</button>
+    </div>
+    <div class="pj-grid" id="pjgrid">
+
+      <div class="gc pj-card rv" data-cat="web">
+        <div class="pj-thumb">
+          <img src="data:image/webp;base64,UklGRiAAAABXRUJQVlA4TBMAAAAvx8AxAAeoOaeI+w8ggAACCCAAAA==" alt="E-Commerce Dashboard" loading="lazy" onerror="this.src='/src/assets/images/placeholder.svg'"/>
+          <div class="pj-ov"></div>
+        </div>
+        <div class="pj-body">
+          <div class="pj-cats"><span class="pj-cat">Web App</span><span class="pj-cat">Dashboard</span></div>
+          <div class="pj-title">E-Commerce Dashboard</div>
+          <div class="pj-desc">Dashboard admin modern untuk manajemen toko online. Dilengkapi fitur analitik penjualan real-time, manajemen inventaris, dan laporan komprehensif.</div>
+          <div class="pj-tech"><span>React</span><span>Node.js</span><span>PostgreSQL</span><span>Tailwind</span></div>
+          <div class="pj-links">
+            <a href="https://github.com/dina-kartika/ecommerce-dashboard" target="_blank" rel="noopener noreferrer" class="pj-lk pj-lk-gh">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+              GitHub
+            </a>
+            <a href="https://ecommerce-dashboard-demo.netlify.app" target="_blank" rel="noopener noreferrer" class="pj-lk pj-lk-dm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gc pj-card rv" style="transition-delay:.1s" data-cat="mobile">
+        <div class="pj-thumb">
+          <img src="data:image/webp;base64,UklGRiAAAABXRUJQVlA4TBMAAAAvx8AxAAcoN7r++w8ggAACCCAAAA==" alt="Weather App" loading="lazy" onerror="this.src='/src/assets/images/placeholder.svg'"/>
+          <div class="pj-ov"></div>
+        </div>
+        <div class="pj-body">
+          <div class="pj-cats"><span class="pj-cat">Mobile</span><span class="pj-cat">API</span></div>
+          <div class="pj-title">Weather App</div>
+          <div class="pj-desc">Aplikasi cuaca berbasis mobile dengan tampilan intuitif. Menampilkan prakiraan 7 hari, kondisi real-time, dan notifikasi cuaca ekstrem.</div>
+          <div class="pj-tech"><span>React Native</span><span>OpenWeather API</span><span>AsyncStorage</span></div>
+          <div class="pj-links">
+            <a href="https://github.com/dina-kartika/weather-app" target="_blank" rel="noopener noreferrer" class="pj-lk pj-lk-gh">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gc pj-card rv" style="transition-delay:.2s" data-cat="data">
+        <div class="pj-thumb">
+          <img src="data:image/webp;base64,UklGRiAAAABXRUJQVlA4TBMAAAAvx8AxAAcor/5Q+w8ggAACCCAAAA==" alt="Data Visualizer" loading="lazy" onerror="this.src='/src/assets/images/placeholder.svg'"/>
+          <div class="pj-ov"></div>
+        </div>
+        <div class="pj-body">
+          <div class="pj-cats"><span class="pj-cat">Data</span><span class="pj-cat">Visualization</span></div>
+          <div class="pj-title">Data Visualizer</div>
+          <div class="pj-desc">Platform visualisasi data interaktif untuk analisis dataset CSV. Mendukung berbagai jenis grafik, filter data, dan ekspor laporan ke PDF.</div>
+          <div class="pj-tech"><span>Python</span><span>D3.js</span><span>Pandas</span><span>Flask</span></div>
+          <div class="pj-links">
+            <a href="#" class="pj-lk pj-lk-gh">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== EXPERIENCE ===== -->
+<section id="experience" style="background:var(--bg2);position:relative;z-index:1;padding:110px 5%">
+  <div class="sw">
+    <div class="s-ey rv">Work History</div>
+    <h2 class="s-h rv">Pengalaman <em>Kerja</em></h2>
+    <div class="exp-list">
+      <div class="gc exp-card rv">
+        <div class="exp-per">2021<br>Okt — Des</div>
+        <div>
+          <div class="exp-type">Internship</div>
+          <div class="exp-role">Quality Control Administration Intern</div>
+          <div class="exp-co">PT Luhai Industrial · Serang, Banten</div>
+          <div class="exp-desc">
+            <ul style="padding-left:1.1rem;display:flex;flex-direction:column;gap:.4rem;">
+              <li>Menginput dan memperbarui data hasil inspeksi kualitas menggunakan Microsoft Excel secara akurat.</li>
+              <li>Memverifikasi dokumen inspeksi dan laporan kualitas sebelum diproses lebih lanjut.</li>
+              <li>Mengelola arsip dokumen fisik maupun digital sesuai standar administrasi perusahaan.</li>
+              <li>Menyusun laporan administrasi Quality Control untuk mendukung evaluasi kualitas produk.</li>
+              <li>Berkoordinasi dengan tim Quality Control dalam memastikan kelengkapan dan keakuratan data.</li>
+            </ul>
+          </div>
+          <div class="exp-tags">
+            <span class="exp-tag">Microsoft Excel</span>
+            <span class="exp-tag">Data Entry</span>
+            <span class="exp-tag">Document Control</span>
+            <span class="exp-tag">Administration</span>
+            <span class="exp-tag">Reporting</span>
+            <span class="exp-tag">Quality Control</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CERTIFICATES ===== -->
+<section id="certificates" style="position:relative;z-index:1;padding:110px 5%">
+  <div class="sw">
+    <div class="s-ey rv">Credentials</div>
+    <div class="cert-carousel-wrap">
+      <div class="cert-carousel-header rv">
+        <h2 class="s-h" style="margin-bottom:0">Pelatihan &amp; <em>Sertifikasi</em></h2>
+        <div style="display:flex;align-items:center;gap:1rem">
+          <span class="cert-counter" id="cert-counter" aria-live="polite">1 – 6 / 21</span>
+          <div class="cert-carousel-nav">
+            <button class="cert-nav-btn" id="cert-prev" type="button" aria-label="Sebelumnya" disabled>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button class="cert-nav-btn" id="cert-next" type="button" aria-label="Berikutnya">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="cert-carousel-viewport">
+        <div class="cert-track" id="cert-track"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact" style="background:var(--bg2);position:relative;z-index:1;padding:110px 5%">
+  <div class="sw">
+    <div class="s-ey rv">Get In Touch</div>
+    <h2 class="s-h rv">Mari <em>Berkolaborasi</em></h2>
+    <div class="ct-grid">
+      <div class="rvl">
+        <h3>Tertarik Bekerja Sama?</h3>
+        <p>Saya selalu terbuka untuk peluang baru, kolaborasi menarik, atau sekadar ngobrol soal teknologi dan desain. Jangan ragu untuk menghubungi saya!</p>
+        <div class="ct-links">
+          <a href="mailto:dinakartikapramuditaa@gmail.com" class="ct-lk">
+            <div class="ct-lk-ico">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--bl)" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            <div>
+              <div class="ct-lk-lbl">Email</div>
+              <div class="ct-lk-val">dinakartikapramuditaa@gmail.com</div>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/dina-kartika-pramudita" target="_blank" rel="noopener noreferrer" class="ct-lk">
+            <div class="ct-lk-ico">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--bl)" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            </div>
+            <div>
+              <div class="ct-lk-lbl">LinkedIn</div>
+              <div class="ct-lk-val">linkedin.com/in/dina-kartika-pramudita</div>
+            </div>
+          </a>
+          <a href="https://github.com/dinnaaaa" target="_blank" rel="noopener noreferrer" class="ct-lk">
+            <div class="ct-lk-ico">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--bl)" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            </div>
+            <div>
+              <div class="ct-lk-lbl">GitHub</div>
+              <div class="ct-lk-val">github.com/dinnaaaa</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="gc rvr" style="padding:2rem">
+        <form id="ctform" novalidate>
+          <div class="fg">
+            <label class="flbl" for="ct-name">Nama Lengkap *</label>
+            <input class="finp" id="ct-name" name="fullName" type="text" placeholder="Nama kamu" required/>
+          </div>
+          <div class="fg">
+            <label class="flbl" for="ct-email">Email *</label>
+            <input class="finp" id="ct-email" name="email" type="email" placeholder="email@kamu.com" required/>
+          </div>
+          <div class="fg">
+            <label class="flbl" for="ct-sub">Subjek *</label>
+            <input class="finp" id="ct-sub" name="subject" type="text" placeholder="Topik pesan" required/>
+          </div>
+          <div class="fg">
+            <label class="flbl" for="ct-msg">Pesan *</label>
+            <textarea class="ftxt" id="ct-msg" name="message" placeholder="Tulis pesanmu di sini..." required></textarea>
+          </div>
+          <div id="ct-status" style="display:none;padding:10px 14px;border-radius:var(--r8);font-size:.85rem;font-weight:500;margin-top:.5rem"></div>
+          <button type="submit" class="fsub" style="margin-top:.5rem;width:100%;padding:13px">
+            Kirim Pesan 🚀
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="ft-inner">
+    <div class="ft-logo">Dina <span>Kartika Pramudita</span></div>
+    <div class="ft-soc">
+      <a href="https://github.com/dinnaaaa" target="_blank" rel="noopener noreferrer" class="soc-btn" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/dina-kartika-pramudita" target="_blank" rel="noopener noreferrer" class="soc-btn" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+      <a href="mailto:dinakartikapramuditaa@gmail.com" class="soc-btn" aria-label="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      </a>
+    </div>
+    <div class="ft-copy">© 2026 <span>Dina Kartika Pramudita</span></div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button id="btt" aria-label="Kembali ke atas">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<script>
+/* ── LOADER ── */
+(function(){
+  const fill=document.getElementById('ldf'),txt=document.getElementById('ldtxt'),ldr=document.getElementById('ldr');
+  let p=0;
+  const iv=setInterval(()=>{
+    p+=Math.random()*18+4;
+    if(p>=100){p=100;clearInterval(iv);setTimeout(()=>ldr.classList.add('out'),300);}
+    fill.style.width=p+'%';txt.textContent=Math.round(p)+'%';
+  },60);
+})();
+
+/* ── PARTICLES ── */
+(function(){
+  const cv=document.getElementById('cvs'),ctx=cv.getContext('2d');
+  let W,H,pts=[];
+  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+  resize();window.addEventListener('resize',()=>{resize();init();});
+  function init(){
+    pts=[];
+    const n=Math.floor(W*H/18000);
+    for(let i=0;i<n;i++)pts.push({x:Math.random()*W,y:Math.random()*H,r:.8+Math.random()*1.4,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,o:.2+Math.random()*.5});
+  }
+  init();
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=W;if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(79,142,247,${p.o})`;ctx.fill();
+    });
+    // draw lines
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){
+        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<120){
+          ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);
+          ctx.strokeStyle=`rgba(79,142,247,${.08*(1-dist/120)})`;ctx.lineWidth=.5;ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── TYPING ── */
+/* removed — no typing animation */
+
+/* ── NAVBAR ── */
+(function(){
+  const nav=document.getElementById('nav');
+  const ham=document.getElementById('ham'),mob=document.getElementById('mob'),mobx=document.getElementById('mobx');
+  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>50),{passive:true});
+  function toggle(o){ham.classList.toggle('o',o);mob.classList.toggle('o',o);document.body.style.overflow=o?'hidden':'';}
+  ham.addEventListener('click',()=>toggle(!mob.classList.contains('o')));
+  mobx.addEventListener('click',()=>toggle(false));
+  document.querySelectorAll('.mob-a').forEach(a=>a.addEventListener('click',()=>toggle(false)));
+
+  // active link on scroll
+  const secs=document.querySelectorAll('section[id]');
+  const nls=document.querySelectorAll('.nav-links a');
+  const obs=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting){nls.forEach(a=>{a.classList.toggle('act',a.getAttribute('href')==='#'+e.target.id);});}});
+  },{threshold:.4});
+  secs.forEach(s=>obs.observe(s));
+})();
+
+/* ── REVEAL ── */
+(function(){
+  const obs=new IntersectionObserver(es=>{
+    es.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('in'),i*70);});
+  },{threshold:.08});
+  document.querySelectorAll('.rv,.rvl,.rvr').forEach(el=>obs.observe(el));
+})();
+
+/* ── SKILL BARS ── */
+(function(){
+  const obs=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        e.currentTarget.querySelectorAll('.sk-fill').forEach(b=>{b.style.width=b.dataset.w+'%';});
+        obs.unobserve(e.currentTarget);
+      }
+    });
+  },{threshold:.3});
+  document.querySelectorAll('.sk-card').forEach(c=>obs.observe(c));
+})();
+
+/* ── PROJECT FILTER ── */
+(function(){
+  document.querySelectorAll('.pj-fb').forEach(btn=>{
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('.pj-fb').forEach(b=>b.classList.remove('act'));
+      this.classList.add('act');
+      const f=this.dataset.f;
+      document.querySelectorAll('.pj-card').forEach(c=>{
+        c.style.display=(f==='all'||c.dataset.cat===f)?'':'none';
+      });
+    });
+  });
+})();
+
+/* ── CONTACT FORM ── */
+(function(){
+  const form=document.getElementById('ctform'),st=document.getElementById('ct-status');
+  if(!form)return;
+  form.addEventListener('submit',e=>{
+    e.preventDefault();
+    const d=new FormData(form);
+    if(!d.get('fullName')||!d.get('email')||!d.get('subject')||!d.get('message')){
+      st.style.display='block';st.style.background='rgba(239,68,68,.15)';
+      st.style.border='1px solid rgba(239,68,68,.3)';st.style.color='#FCA5A5';
+      st.textContent='Semua field wajib diisi!';return;
+    }
+    st.style.display='block';st.style.background='rgba(52,211,153,.15)';
+    st.style.border='1px solid rgba(52,211,153,.3)';st.style.color='var(--gn)';
+    st.textContent='✓ Pesan terkirim! Saya akan membalas secepatnya.';
+    form.reset();setTimeout(()=>st.style.display='none',4000);
+  });
+})();
+
+/* ── BACK TO TOP ── */
+(function(){
+  const btn=document.getElementById('btt');
+  window.addEventListener('scroll',()=>btn.classList.toggle('show',scrollY>400),{passive:true});
+  btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+})();
+
+/* ── YEAR ── */
+const yearEl=document.getElementById('yr');
+if(yearEl) yearEl.textContent=new Date().getFullYear();
+
+/* ── CERT CAROUSEL ── */
+(function(){
+  const track=document.getElementById('cert-track');
+  const prev=document.getElementById('cert-prev');
+  const next=document.getElementById('cert-next');
+  const counter=document.getElementById('cert-counter');
+  if(!track||!prev||!next)return;
+
+  const certifications=[
+    {no:'01', title:'Introduction to Data Science with Python', issuer:'DQLab (Xeratic & Universitas Multimedia Nusantara)', date:'25 Mei 2026', link:'https://drive.google.com/file/d/1MhXuwvtzyx0vRlrClSBVbnl5UDDf0-br/view?usp=sharing'},
+    {no:'02', title:'Fundamental SQL Group By and Having', issuer:'DQLab (Xeratic & Universitas Multimedia Nusantara)', date:'25 Mei 2026', link:'https://drive.google.com/file/d/1Mux2tp1jlItJk0cy_K5F2su0yCUxcc_-/view?usp=drive_link'},
+    {no:'03', title:'Python for Data Professional – Part 1', issuer:'DQLab (Xeratic & Universitas Multimedia Nusantara)', date:'26 Mei 2026', link:'https://drive.google.com/file/d/13kXHifw_nhsDCBxmw1_flwp5Kr1C7iiI/view?usp=sharing'},
+    {no:'04', title:'Intro to Software Engineering', issuer:'RevoU', date:'29 Mei 2026', link:'https://drive.google.com/file/d/1yh4mRXo61pqwZ6toUj3dJ6vw3z27QZqV/view?usp=drive_link'},
+    {no:'05', title:'Python for Data Professional – Part 2', issuer:'DQLab (Xeratic & Universitas Multimedia Nusantara)', date:'31 Mei 2026', link:'https://drive.google.com/file/d/1HSrpETlGQzYDlMT8MEJ2IAWCP8lC9GpI/view?usp=sharing'},
+    {no:'06', title:'Statistics Using R for Data Science', issuer:'DQLab (Xeratic & Universitas Multimedia Nusantara)', date:'3 Juni 2026', link:'https://drive.google.com/file/d/1HOVU9rZrb5hl_4QJJIRmj67QPZ5J8f3H/view?usp=sharing'},
+    {no:'07', title:'Project Machine Learning for Retail with R', issuer:'DQLab (Xeratic & Universitas Multimedia Nusantara)', date:'3 Juni 2026', link:'https://drive.google.com/file/d/1QApHnRiIqSt3STbtpzlns9X6L9EB8nQH/view?usp=drive_link'},
+    {no:'08', title:'R Fundamental for Data Science', issuer:'DQLab (Xeratic & Universitas Multimedia Nusantara)', date:'3 Juni 2026', link:'https://drive.google.com/file/d/1mKH9kCBMa6SZNlCM6dunEAhsk_30BRGJ/view?usp=sharing'},
+    {no:'09', title:'Quiz Basic Excel', issuer:'DQLab (Xeratic & Universitas Multimedia Nusantara)', date:'3 Juni 2026', link:'https://drive.google.com/file/d/1FICVbXbwM_87UuqNvgrpQTgt2VRsBaV9/view?usp=drive_link'},
+    {no:'10', title:'Data Engineer Challenge with Python', issuer:'DQLab (Xeratic & Universitas Multimedia Nusantara)', date:'4 Juni 2026', link:'https://drive.google.com/file/d/1Yc3MWPVFQ-DbR2_JhO2iOKn4_U8l4SEK/view?usp=sharing'},
+    {no:'11', title:'Data Science in Retail: Market Basket Analysis', issuer:'DQLab (Xeratic & Universitas Multimedia Nusantara)', date:'4 Juni 2026', link:'https://drive.google.com/file/d/1G6bpJSXm8gLkJC8gmjUDlQG0yr4J2cdE/view?usp=sharing'},
+    {no:'12', title:'Data Preparation in Data Science using R', issuer:'DQLab (Xeratic & Universitas Multimedia Nusantara)', date:'4 Juni 2026', link:'https://drive.google.com/file/d/1rJO8UNSq6T4tQPm4wLqC3O9wTiK0Cjxw/view?usp=drive_link'},
+    {no:'13', title:'WordPress Introduction', issuer:'MySkill', date:'8 Juni 2026', link:'https://drive.google.com/file/d/14TnCSQ3o3KbJd2GdIlrHFuL5I-LHp1Lj/view?usp=drive_link'},
+    {no:'14', title:'Fundamental Perpajakan Perusahaan', issuer:'MySkill', date:'9 Juni 2026', link:'https://drive.google.com/file/d/1MUUBEmi5ht0geOb4u7WU2aU-efOIyX5i/view?usp=drive_link'},
+    {no:'15', title:'Webinar Machine Learning', issuer:'SpecialSkill Indonesia', date:'9 Juni 2026', link:'https://drive.google.com/file/d/1oKIYBybN-fNY2ZxfasJjMAOlJodBsu5A/view?usp=sharing'},
+    {no:'16', title:'AI for Work Productivity', issuer:'MySkill', date:'12 Juni 2026', link:'https://drive.google.com/file/d/1zvc_fe0FrXuQD_c-vj0BByTSg5IgQpds/view?usp=drive_link'},
+    {no:'17', title:'UI/UX Design Introduction', issuer:'MySkill', date:'17 Juni 2026', link:'https://drive.google.com/file/d/1SBgPKF1MBmHvjQgQEVa1kPnyduOxKhH1/view?usp=drive_link'},
+    {no:'18', title:'Pivot Table in Microsoft Excel', issuer:'MySkill', date:'18 Juni 2026', link:'https://drive.google.com/file/d/1Ui8G3l_3gI9JP9n470ExNAY2ZZYtlF0f/view?usp=drive_link'},
+    {no:'19', title:'R for Data Professional – Part 1', issuer:'DQLab (Xeratic & Universitas Multimedia Nusantara)', date:'19 Juni 2026', link:'https://drive.google.com/file/d/1M3WP166jrtj1b2TX1nw9Gne9u5zmnAtz/view?usp=drive_link'},
+    {no:'20', title:'Introduction to Product Management', issuer:'MySkill', date:'19 Juni 2026', link:'https://drive.google.com/file/d/1pJ4ovUnfMVSgQqzodYaqGsB4ebKsMjkW/view?usp=drive_link'},
+    {no:'21', title:'Intro to Data Analytics', issuer:'RevoU', date:'19 Juni 2026', link:'https://drive.google.com/file/d/1TGDeG_Ixrq9jqV9Dsz_oai5CLo-gndia/view?usp=drive_link'}
+  ];
+
+  const PER_PAGE=6;
+  const total=certifications.length;
+  const pages=Math.ceil(total/PER_PAGE);
+  let page=0;
+
+  const slides=[];
+  for(let i=0;i<certifications.length;i+=PER_PAGE){
+    const slide=document.createElement('div');
+    slide.className='cert-slide';
+
+    const items=certifications.slice(i,i+PER_PAGE);
+    const placeholders=Array.from({length:PER_PAGE-items.length},()=>`<div class="gc cert-card cert-card-placeholder" aria-hidden="true"></div>`);
+    slide.innerHTML=[...items.map((item, index)=>`
+      <div class="gc cert-card rv" style="transition-delay:${(index*0.04).toFixed(2)}s">
+        <div class="cert-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4"/>
+          </svg>
+        </div>
+        <div>
+          <div class="cert-no">${item.no} • 2026</div>
+          <div class="cert-nm">${item.title}</div>
+          <div class="cert-is">${item.issuer}</div>
+          <div class="cert-yr">${item.date}</div>
+          <a href="${item.link}" class="cert-lk" target="_blank" rel="noopener noreferrer">Lihat Sertifikat →</a>
+        </div>
+      </div>
+    `), ...placeholders].join('');
+    slides.push(slide);
+  }
+
+  track.innerHTML='';
+  slides.forEach(slide=>track.appendChild(slide));
+
+  const header=document.querySelector('.cert-carousel-header');
+  if(header) header.classList.add('in');
+
+  track.querySelectorAll('.cert-card').forEach(card=>card.classList.add('in'));
+
+  function render(){
+    track.style.transform='translateX(-'+(page*100)+'%)';
+    const start=page*PER_PAGE+1;
+    const end=Math.min((page+1)*PER_PAGE,total);
+    counter.textContent=start+' – '+end+' / '+total;
+    prev.disabled=page===0;
+    next.disabled=page>=pages-1;
+  }
+
+  prev.addEventListener('click',()=>{if(page>0){page--;render();}});
+  next.addEventListener('click',()=>{if(page<pages-1){page++;render();}});
+  render();
+})();
+
+/* ── CV BUTTON ── */
+(function(){
+  fetch('/src/assets/cv/dina-cv.pdf',{method:'HEAD'}).catch(()=>{
+    document.querySelectorAll('[href*="dina-cv.pdf"]').forEach(el=>{
+      el.setAttribute('aria-disabled','true');
+      el.style.opacity='.5';el.style.pointerEvents='none';
+      el.title='CV sedang tidak tersedia';
+    });
+  });
+})();
+</script>
+</body>
+</html>
